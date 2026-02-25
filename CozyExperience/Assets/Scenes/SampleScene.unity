@@ -5614,6 +5614,35 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &669000186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669000181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e51c72fbc3a70494699b3eaff458a05c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StateMachine
+  characterController: {fileID: 669000187}
+--- !u!114 &669000187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669000181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2da92c7aeeee134da70c930f43a7d04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterController
+  animator: {fileID: 0}
+  stateMachine: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  moveSpeed: 5
 --- !u!1001 &8485350445713195995
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5698,13 +5727,20 @@ PrefabInstance:
       propertyPath: animator
       value: 
       objectReference: {fileID: 669000182}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7622211311614140712, guid: e74998f840742b9469d9941407c577c1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 508078750299480782, guid: e74998f840742b9469d9941407c577c1, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 669000187}
+    - targetCorrespondingSourceObject: {fileID: 508078750299480782, guid: e74998f840742b9469d9941407c577c1, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 669000182}
+    - targetCorrespondingSourceObject: {fileID: 508078750299480782, guid: e74998f840742b9469d9941407c577c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 669000186}
   m_SourcePrefab: {fileID: 100100000, guid: e74998f840742b9469d9941407c577c1, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
