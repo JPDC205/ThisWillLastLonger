@@ -41,4 +41,9 @@ public class StateMachine : MonoBehaviour
     {
         ChangeState(new WalkingState(this, characterController, characterController.GetAnimator()));
     }
+
+    public void GoExecutingAction()
+    {
+        ChangeState(new DefaultActionState(this, characterController, characterController.GetAnimator()));
+    }
 }

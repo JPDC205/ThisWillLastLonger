@@ -62,3 +62,21 @@ public class WalkingState : State
         animator.SetBool("isWalking", false);
     }
 }
+
+public class DefaultActionState : State
+{
+    public DefaultActionState(StateMachine stateMachine, CharacterController characterController, Animator animator)
+        : base(stateMachine, characterController, animator)
+    {
+        characterState = CharacterState.ExecutingAction;
+    }
+
+    public override void Enter()
+    {
+        animator.SetBool("isExecutingAction", true);
+    }
+    public override void Exit()
+    {
+        animator.SetBool("isExecutingAction", false);
+    }
+}

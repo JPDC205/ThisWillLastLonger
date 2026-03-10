@@ -5542,6 +5542,67 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &482009837
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 482009839}
+  - component: {fileID: 482009838}
+  m_Layer: 0
+  m_Name: Managers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &482009838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482009837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f90454edf2c2d4dad99c6f1c8a2ad9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapManager
+  tilemap: {fileID: 84098508}
+  grassTiles:
+  - {fileID: 11400000, guid: 80eb74a7422387e44bcf3e774c19e0ae, type: 2}
+  - {fileID: 11400000, guid: 36c80dbf31765cc42ad3ee6c78d1cdd6, type: 2}
+  - {fileID: 11400000, guid: 213adde1e1bf5b945b11a1e72084cd60, type: 2}
+  - {fileID: 11400000, guid: 9bb93569309d55e4cbe70d213925d9c2, type: 2}
+  - {fileID: 11400000, guid: 4603bb0a6fa9c2b42861321103245d5b, type: 2}
+  - {fileID: 11400000, guid: 88a70074de8cbda4eaf424c6862a6c61, type: 2}
+  - {fileID: 11400000, guid: 05d3035b5ee564f4d9eaebffaf5c0f2c, type: 2}
+  - {fileID: 11400000, guid: cb82444d4a887744281653d378fcfb29, type: 2}
+  - {fileID: 11400000, guid: 3466e0d04397b054b97c71ff6a59cac2, type: 2}
+  - {fileID: 11400000, guid: 30b0267c4a1680c4cabd75c61ead38f4, type: 2}
+  - {fileID: 11400000, guid: a3c9cac6cf3543b41a482370d4f4eef0, type: 2}
+  - {fileID: 11400000, guid: 569b66d0598c2ab44ae380bb85288e51, type: 2}
+  - {fileID: 11400000, guid: a8832eab141ea0548a6cb1080b9d31a4, type: 2}
+  groundTiles:
+  - {fileID: 11400000, guid: 2b8c20166a174f34386a7ac3e05752a1, type: 2}
+--- !u!4 &482009839
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482009837}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.78154, y: 7.64705, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &618054727
 GameObject:
   m_ObjectHideFlags: 0
@@ -5639,10 +5700,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2da92c7aeeee134da70c930f43a7d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController
-  animator: {fileID: 0}
-  stateMachine: {fileID: 0}
-  spriteRenderer: {fileID: 0}
+  animator: {fileID: 669000182}
+  stateMachine: {fileID: 669000186}
+  spriteRenderer: {fileID: 669000188}
   moveSpeed: 5
+--- !u!212 &669000188 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1771907414736602537, guid: e74998f840742b9469d9941407c577c1, type: 3}
+  m_PrefabInstance: {fileID: 8485350445713195995}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8485350445713195995
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5712,6 +5778,10 @@ PrefabInstance:
       value: 6.4
       objectReference: {fileID: 0}
     - target: {fileID: 1771907414736602537, guid: e74998f840742b9469d9941407c577c1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8c65e185290be784ca63a5b75fdd51ed, type: 3}
+    - target: {fileID: 1771907414736602537, guid: e74998f840742b9469d9941407c577c1, type: 3}
       propertyPath: m_DrawMode
       value: 0
       objectReference: {fileID: 0}
@@ -5722,6 +5792,18 @@ PrefabInstance:
     - target: {fileID: 1771907414736602537, guid: e74998f840742b9469d9941407c577c1, type: 3}
       propertyPath: m_SpriteSortPoint
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1771907414736602537, guid: e74998f840742b9469d9941407c577c1, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3372340737754311349, guid: e74998f840742b9469d9941407c577c1, type: 3}
+      propertyPath: orthographic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7154946024800915306, guid: e74998f840742b9469d9941407c577c1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 7622211311614140712, guid: e74998f840742b9469d9941407c577c1, type: 3}
       propertyPath: animator
@@ -5748,3 +5830,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 618054729}
   - {fileID: 8485350445713195995}
+  - {fileID: 482009839}

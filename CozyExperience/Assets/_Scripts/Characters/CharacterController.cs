@@ -6,7 +6,8 @@ public enum CharacterState
 {
     Idle,
     Walking,
-    Running
+    Running,
+    ExecutingAction
 }
 
 public class CharacterController : MonoBehaviour
@@ -23,6 +24,7 @@ public class CharacterController : MonoBehaviour
 
     private void Awake()
     {
+
         inputActions = new @InputSystem_Actions();
     }
 
@@ -41,18 +43,22 @@ public class CharacterController : MonoBehaviour
         inputActions.Player.Enable();
         inputActions.Player.Move.performed += OnMove;
         inputActions.Player.Move.canceled += OnMove;
+        inputActions.Player.Action.performed += OnAction;
     }
 
     private void OnDisable()
     {
         inputActions.Player.Move.performed -= OnMove;
         inputActions.Player.Move.canceled -= OnMove;
+        inputActions.Player.Action.performed -= OnAction;
         inputActions.Player.Disable();
     }
 
     private void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
+        if (!CanMove()) return;
+        
         if (moveInput != Vector2.zero)
         {
             stateMachine.GoWalking();
@@ -63,19 +69,25 @@ public class CharacterController : MonoBehaviour
         }
     }
 
+    private void OnAction(InputAction.CallbackContext context)
+    {
+        // Handle action input (e.g., attack, interact)
+        Debug.Log("Action performed!");
+        stateMachine.GoExecutingAction();
+    }
+
     // Update is called once per frame
     void Update()
     {
        switch (stateMachine.GetState)
-            {
-                case CharacterState.Idle:
-                 // Idle behavior
-                 break;
-                case CharacterState.Walking:
-                 ManageMovement();
-                 break;
-                case CharacterState.Running:
-                 // Running behavior
+       {
+                
+            case CharacterState.Walking:
+             ManageMovement();
+                    break;
+            case CharacterState.ExecutingAction:
+            case CharacterState.Idle:
+            case CharacterState.Running:
                  break;
         }
     }
@@ -96,12 +108,18 @@ public class CharacterController : MonoBehaviour
             {
                 spriteRenderer.flipX = true;
             }
+        }
+    }
 
-            animator.SetBool("isMoving", true);
-        }
-        else
-        {
-            animator.SetBool("isMoving", false);
-        }
+    private bool CanMove()
+    {
+        return stateMachine.GetState == CharacterState.Idle || stateMachine.GetState == CharacterState.Walking;
+    }
+
+    public void FinishAction()
+    {
+        // This method can be called by animation events to signal the end of an action
+        Debug.Log("Action finished!");
+        stateMachine.GoIdle();
     }
 }

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9d6c991b5c2867c41b31b944809f1fc5
+guid: cace249dc60924847b3740a1d2109c25
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -889230706657889086
-    second: LittleDevil_0
+      213: -4913982344839117222
+    second: frame0000_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,7 +48,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -100,12 +100,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LittleDevil_0
+      name: frame0000_0
       rect:
         serializedVersion: 2
-        x: 106
+        x: 103
         y: 29
-        width: 311
+        width: 403
         height: 572
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2c479463261d8a3f0800000000000000
-      internalID: -889230706657889086
+      spriteID: a56c25fb7170ecbb0800000000000000
+      internalID: -4913982344839117222
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      LittleDevil_0: -889230706657889086
+      frame0000_0: -4913982344839117222
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
