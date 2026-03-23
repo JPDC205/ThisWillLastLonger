@@ -57,15 +57,15 @@ public class MapManager : MonoBehaviour
                     Vector2 key = new Vector2(x, y);
                     if (grassTiles.Contains(tileBase))
                     {
-                        newTile = new Tile(tileBase, key, TileType.Grass, this);
+                        newTile = new GrassTile(tileBase, key, this);
                     }
                     else if (groundTiles.Contains(tileBase))
                     {
-                        newTile = new Tile(tileBase, key, TileType.Ground, this);
+                        newTile = new GroundTile(tileBase, key, this);
                     }
                     else
                     {
-                        newTile = new Tile(tileBase, key, TileType.None, this);
+                        newTile = new GrassTile(tileBase, key, this);
                     }
                     tiles.Add(key, newTile);
 
@@ -81,6 +81,26 @@ public class MapManager : MonoBehaviour
             return tile;
         }
         return null; // Return null if no tile exists at the given position
+    }
+
+    public Tile GetTileAtWorldPosition(Vector3 worldPosition)
+    {
+        Vector3Int cellPosition = tilemap.WorldToCell(worldPosition);
+        Vector2 key = new Vector2(cellPosition.x, cellPosition.y);
+        return GetTileAtPosition(key);
+    }
+
+    public void SetTileColor(Vector2 position, Color color)
+    {
+        Vector3Int cellPosition = new Vector3Int((int)position.x, (int)position.y, 0);
+
+        // Ensure tile flags allow color changes
+        tilemap.SetTileFlags(cellPosition, TileFlags.None);
+
+        // Set the color
+        tilemap.SetColor(cellPosition, color);
+
+        Debug.Log($"Set tile at {cellPosition} to color {color}");
     }
 
 }

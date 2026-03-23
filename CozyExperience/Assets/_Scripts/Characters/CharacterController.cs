@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 
 public enum CharacterState
 {
@@ -74,6 +75,11 @@ public class CharacterController : MonoBehaviour
         // Handle action input (e.g., attack, interact)
         Debug.Log("Action performed!");
         stateMachine.GoExecutingAction();
+        Tile tileUnderMouse = GetTileUnderMouse();
+        if (tileUnderMouse != null)
+        {
+            tileUnderMouse.Interact();
+        }
     }
 
     // Update is called once per frame
@@ -95,7 +101,6 @@ public class CharacterController : MonoBehaviour
     void ManageMovement()
     {
         Vector3 movement = new Vector3(moveInput.x, moveInput.y, 0) * moveSpeed * Time.deltaTime;
-        Debug.Log($"MoveX: {movement.x}, MoveY: {movement.y}");
         transform.Translate(movement);
 
         if (moveInput != Vector2.zero)
@@ -121,5 +126,19 @@ public class CharacterController : MonoBehaviour
         // This method can be called by animation events to signal the end of an action
         Debug.Log("Action finished!");
         stateMachine.GoIdle();
+    }
+
+    public Tile GetTileUnderMouse()
+    {
+        // Get mouse position using Input System
+        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+
+        // Convert to world coordinates - try different approaches
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, Camera.main.transform.position.z * -1));
+        mouseWorldPos.z = 0;
+
+        Tile tile = MapManager._instance.GetTileAtWorldPosition(mouseWorldPos);
+
+        return tile;
     }
 }
