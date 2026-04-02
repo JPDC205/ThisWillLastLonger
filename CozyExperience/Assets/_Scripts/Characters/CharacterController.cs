@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,6 +24,11 @@ public class CharacterController : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 5f;
 
+    private Tile HoveredTile;
+
+    [SerializeField]
+    private int interactingRange = 1;
+
     private void Awake()
     {
 
@@ -33,8 +39,8 @@ public class CharacterController : MonoBehaviour
     void Start()
     {
         stateMachine = GetComponent<StateMachine>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        animator = GetComponentInChildren<Animator>();
 
         stateMachine.GoIdle();
     }
@@ -42,24 +48,20 @@ public class CharacterController : MonoBehaviour
     private void OnEnable()
     {
         inputActions.Player.Enable();
-        inputActions.Player.Move.performed += OnMove;
-        inputActions.Player.Move.canceled += OnMove;
         inputActions.Player.Action.performed += OnAction;
     }
 
     private void OnDisable()
     {
-        inputActions.Player.Move.performed -= OnMove;
-        inputActions.Player.Move.canceled -= OnMove;
         inputActions.Player.Action.performed -= OnAction;
         inputActions.Player.Disable();
     }
 
-    private void OnMove(InputAction.CallbackContext context)
+    private void DetectMove()
     {
-        moveInput = context.ReadValue<Vector2>();
+        moveInput = inputActions.Player.Move.ReadValue<Vector2>();
         if (!CanMove()) return;
-        
+
         if (moveInput != Vector2.zero)
         {
             stateMachine.GoWalking();
@@ -74,27 +76,53 @@ public class CharacterController : MonoBehaviour
     {
         // Handle action input (e.g., attack, interact)
         Debug.Log("Action performed!");
-        stateMachine.GoExecutingAction();
-        Tile tileUnderMouse = GetTileUnderMouse();
-        if (tileUnderMouse != null)
+
+        if (HoveredTile != null)
         {
-            tileUnderMouse.Interact();
+            Tile characterTile = GetTileUnderCharacter();
+            if (IsTileWithingInteractionRange(characterTile, HoveredTile))
+            {
+                stateMachine.GoExecutingAction();
+                HoveredTile.Interact();
+            }
+            else
+            {
+                Debug.Log("Target tile is out of interaction range.");
+            }
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-       switch (stateMachine.GetState)
-       {
-                
+        UpdateHoveredTile();
+        DetectMove();
+        switch (stateMachine.GetState())
+        {
             case CharacterState.Walking:
-             ManageMovement();
-                    break;
+                ManageMovement();
+                break;
             case CharacterState.ExecutingAction:
             case CharacterState.Idle:
             case CharacterState.Running:
-                 break;
+                break;
+        }
+    }
+
+    private void UpdateHoveredTile()
+    {
+        Tile newHoveredTile = GetTileUnderMouse();
+        if (newHoveredTile != HoveredTile)
+        {
+            if (HoveredTile != null)
+            {
+                HoveredTile.SetColor(Color.white); // Reset color of previously hovered tile
+            }
+            HoveredTile = newHoveredTile;
+            if (HoveredTile != null)
+            {
+                HoveredTile.SetColor(Color.yellow); // Highlight new hovered tile
+            }
         }
     }
 
@@ -118,7 +146,7 @@ public class CharacterController : MonoBehaviour
 
     private bool CanMove()
     {
-        return stateMachine.GetState == CharacterState.Idle || stateMachine.GetState == CharacterState.Walking;
+        return stateMachine.GetState() == CharacterState.Idle || stateMachine.GetState() == CharacterState.Walking;
     }
 
     public void FinishAction()
@@ -140,5 +168,19 @@ public class CharacterController : MonoBehaviour
         Tile tile = MapManager._instance.GetTileAtWorldPosition(mouseWorldPos);
 
         return tile;
+    }
+
+    public Tile GetTileUnderCharacter()
+    {
+        Vector3 characterWorldPos = transform.position;
+        Tile tile = MapManager._instance.GetTileAtWorldPosition(characterWorldPos);
+        return tile;
+    }
+
+    public bool IsTileWithingInteractionRange(Tile characterTile, Tile InteractingTile)
+    {
+        Vector2 characterPos = characterTile.GetPosition();
+        Vector2 interactingPos = InteractingTile.GetPosition();
+        return math.abs(characterPos.x - interactingPos.x) <= interactingRange && math.abs(characterPos.y - interactingPos.y) <= interactingRange;
     }
 }

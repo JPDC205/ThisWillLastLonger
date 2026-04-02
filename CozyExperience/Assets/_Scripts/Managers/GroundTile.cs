@@ -6,17 +6,18 @@ public class GroundTile : Tile
     public GroundTile(TileBase tileBase, Vector2 position, MapManager mapManager) : base(tileBase, position, mapManager)
     {
         SetTileType(TileType.Ground);
-        Debug.Log("Created Ground Tile at position: " + position);
     }
 
     public override void Interact()
     {
-        Debug.Log("Interacting with Ground Tile at position: " + GetPosition());
-        if (!IsOccupied())
+        base.Interact();
+        Vector2 worldPosition = GetWorldPosition();
+        var newGroundPile = GameObject.Instantiate(TileEntityManager.Instance.GroundPile, new Vector3(worldPosition.x, worldPosition.y, 0), Quaternion.identity);
+
+        if (newGroundPile.TryGetComponent(out PlowedLandEntity groundPileComponent))
         {
-            Debug.Log("Ground Tile is not occupied. Performing interaction.");
-            SetColor(Color.green); // Example interaction: change color to red
-                                     // Additional interaction logic can be added here
+            groundPileComponent.Initialize(this);
+            this.SetTileEntity(groundPileComponent);
         }
     }
 }

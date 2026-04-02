@@ -10,5 +10,6 @@ public class GrassTile : Tile
 
     public override void Interact()
     {
+        base.Interact();
     }
 }

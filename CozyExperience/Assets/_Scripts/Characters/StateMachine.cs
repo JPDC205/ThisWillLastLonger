@@ -19,7 +19,7 @@ public class StateMachine : MonoBehaviour
         
     }
 
-    public CharacterState GetState => currentState.GetCharacterState();
+    public CharacterState GetState () => currentState.GetCharacterState();
 
     public void ChangeState(State newState)
     {

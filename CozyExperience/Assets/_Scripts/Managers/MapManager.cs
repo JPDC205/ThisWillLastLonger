@@ -90,6 +90,16 @@ public class MapManager : MonoBehaviour
         return GetTileAtPosition(key);
     }
 
+    public Vector2 TileToWorldPosition(Vector2 tilePosition)
+    {
+        Vector3Int cellPosition = new Vector3Int((int)tilePosition.x, (int)tilePosition.y, 0);
+
+        // GetCellCenterWorld returns the center of the tile in world coordinates
+        Vector3 worldPosition = tilemap.GetCellCenterWorld(cellPosition);
+
+        return new Vector2(worldPosition.x, worldPosition.y);
+    }
+
     public void SetTileColor(Vector2 position, Color color)
     {
         Vector3Int cellPosition = new Vector3Int((int)position.x, (int)position.y, 0);
@@ -99,8 +109,6 @@ public class MapManager : MonoBehaviour
 
         // Set the color
         tilemap.SetColor(cellPosition, color);
-
-        Debug.Log($"Set tile at {cellPosition} to color {color}");
     }
 
 }

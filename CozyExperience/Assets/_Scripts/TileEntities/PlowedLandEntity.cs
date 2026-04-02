@@ -1,8 +1,12 @@
 using UnityEngine;
 
-public abstract class TileEntity : MonoBehaviour, I_Interactable
+public class PlowedLandEntity : TileEntity
 {
-    private Tile rootTile { get; set;}
+    public override void Interact()
+    {
+        Debug.Log("Interacted with Plowed Land Entity at position: " + transform.position);
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -13,12 +17,5 @@ public abstract class TileEntity : MonoBehaviour, I_Interactable
     void Update()
     {
         
-    }
-
-    public abstract void Interact();
-
-    public virtual void Initialize(Tile tile)
-    {
-        rootTile = tile;
     }
 }
